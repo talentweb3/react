@@ -42,7 +42,8 @@ const DB = "mongodb+srv://client:<pcrtest>@<cluster0.vx8q1.mongodb.net>/<myFirst
 mongoose
     .connect(DB, {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        useFindAndModify: false
     })
     .then(() => console.log("database connection successfully!"))
     .catch((error) => console.log(error));
