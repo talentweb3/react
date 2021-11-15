@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-var Url = `http://pcrtest-centers.herokuapp.com/`;
+var Url = `https://pcrtest-centers.herokuapp.com/`;
 // if (process.env.NODE_ENV !== 'production')
 //     Url = `http://localhost:8000/`;
 // else
