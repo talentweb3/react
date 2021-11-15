@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-var Url = "http://localhost:8000/";
-// if (process.env.NODE_ENV !== 'production')
-//     Url = `http://localhost:8000/`;
-// else
-//     Url = `http://${process.env.PRODUCTION_URL}/`;
+var Url;
+if (process.env.NODE_ENV !== 'production')
+    Url = `http://localhost:8000/`;
+else
+    Url = `http://https://pcrtest-centers.herokuapp.com/`;
 
 const Api = axios.create({ baseURL: `${Url}`});
 
