@@ -33,10 +33,10 @@ app.use(cors());
 // if (process.env.NODE_ENV !== 'production' ) {
 //     const DB = process.env.DATABASE;
 // } else {
-//     const DB = "mongodb+srv://client:<password>@cluster0.vx8q1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+//     const DB = "mongodb+srv://client:<password>@cluster0.vx8q1.mongodb.net>/<myFirstDatabase>?retryWrites=true&w=majority"
 // }
 
-const DB = "mongodb+srv://client:pcrtest@cluster0.vx8q1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+const DB = "mongodb+srv://client:<pcrtest>@<cluster0.vx8q1.mongodb.net>/<myFirstDatabase>?retryWrites=true&w=majority"
 
 
 mongoose
