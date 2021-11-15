@@ -43,7 +43,7 @@ mongoose
     .connect(DB, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        useFindAndModify: false
+        // useFindAndModify: false
     })
     .then(() => console.log("database connection successfully!"))
     .catch((error) => console.log(error));
