@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-var Url = `https://54.73.53.134:443/`;
+var Url = `https://pcrtest-centers.herokuapp.com/`;
 // if (process.env.NODE_ENV !== 'production')
 //     Url = `http://localhost:8000/`;
 // else
