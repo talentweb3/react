@@ -47,7 +47,7 @@ mongoose
     .then(() => console.log("database connection successfully!"))
     .catch((error) => console.log(error));
 
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 443;
 const server = app.listen(port, () => {
     console.log(`server is running on port ${port}`);
 });
