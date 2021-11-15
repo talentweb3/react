@@ -3,7 +3,7 @@ let variable = {}
 
 if (process.env.NODE_ENV  === 'production') {
     variable = {
-        DB_ROUTE: "http://alshameslabs.com/",
+        DB_ROUTE: "https://pcrtest-centers.herokuapp.com/",
         FRONT_ROUTE: "http://alshameslabs.com/"
     }
 } else {
