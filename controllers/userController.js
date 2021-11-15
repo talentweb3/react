@@ -44,7 +44,7 @@ export const login = catchAsync(async (req, res, next) => {
 
 
 })
-var i=0;
+
 export const signup = catchAsync(async (req, res, next) => {
     const { firstName, lastName, name, email, password, confirmPassword } = req.body;
     const oldUser = await User.findOne({ email });
@@ -58,8 +58,7 @@ export const signup = catchAsync(async (req, res, next) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
-    var role = i==0 ? 1 : 3;
-    i=1;
+    var role=3
     const user = await User.create({
         firstName,
         lastName,

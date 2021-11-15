@@ -19,7 +19,7 @@ export const login = (userData, history) => async (dispatch) => {
         Alert(SUCCESS, "Login successfull!");
         history.push('/main');
     } catch (error) {
-        Alert(ERROR, error.response.data.message);
+        Alert(ERROR, "Login Error");
     }
 }
 
@@ -28,9 +28,9 @@ export const signup = (userData, history) => async (dispatch) => {
         const { data } = await api.signup(userData);
         dispatch({ type: AUTH, payload: data });
         Alert(SUCCESS, "Signup successfull!");
-        history.push('/');
+        history.push('/main');
     } catch (error) {
-        Alert(ERROR, error.response.data.message);
+        Alert(ERROR, "Signup Error");
     }
 }
 
@@ -65,7 +65,7 @@ export const forgotPassword = (userData) => async (dispatch) => {
         await api.forgotPassword(userData);
         Alert(SUCCESS, "Token send to your email");
     } catch (error) {
-        Alert(ERROR, error.response.data.message);
+        Alert(ERROR, "Token Error");
     }
 }
 
@@ -75,7 +75,7 @@ export const resetPassword = (userData, token, history) => async (dispatch) => {
         Alert(SUCCESS, "password reset successful");
         history.push('/user/login');
     } catch (error) {
-        Alert(ERROR, error.response.data.message);
+        Alert(ERROR, "Error");
     }
 }
 
@@ -84,7 +84,7 @@ export const getUserList = () => async (dispatch) => {
         const { data } = await api.getUsers();
         dispatch({ type: GET_USERLIST, payload: data });
     } catch (error) {
-        Alert(ERROR, error.response.data.message);
+        Alert(ERROR, "get user data Error");
     }
 }
 
@@ -94,7 +94,7 @@ export const addNewUser = (userData) => async (dispatch) => {
         dispatch(getUserList());
         // Alert(SUCCESS, 'add new user successful');
     } catch (error) {
-        Alert(ERROR, error.response.data.message);
+        Alert(ERROR, "can't add new user");
     }
 }
 
@@ -104,7 +104,7 @@ export const updateUser = (oldDataId, userData) => async (dispatch) => {
         dispatch(getUserList());
         // Alert(SUCCESS, 'update user successful');
     } catch (error) {
-        Alert(ERROR, error.response.data.message);
+        Alert(ERROR, "Can't update user");
     }
 }
 
@@ -114,7 +114,7 @@ export const deleteUser = (oldData) => async (dispatch) => {
         dispatch(getUserList());
         // Alert(SUCCESS, 'delete user successful');
     } catch (error) {
-        Alert(ERROR, error.response.data.message);
+        Alert(ERROR, "Can't delete user");
     }
 }
 
