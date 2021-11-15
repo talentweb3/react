@@ -120,26 +120,12 @@ export const viewRequest = async (req, res) => {
   console.log(url);
   var veiwUrl;
   if (process.env.NODE_ENV !== 'production')
-      veiwUrl = `http://${process.env.LOCAL_URL}${url}`;
+      veiwUrl = `http://localhost:8000${url}`;
   else
       veiwUrl = `http://${process.env.PRODUCTION_URL}${url}`;
   res.send(veiwUrl);
 }
 
-export const downloadPDF = async (req, res) => {
-  console.log("download:", req.body);
-  const proposal = await Apply.findById(req.body);
-  const url = proposal.pdfUrl;
-
-  // var resetURL;
-  // if (process.env.NODE_ENV !== 'production')
-  //     resetURL = `http://localhost:8000${url}`;
-  // else
-  //     resetURL = `http://${url}}`;
-
-  // console.log("resetURL",resetURL);
-  res.send("success");
-}
 
 // sendgridMail.setApiKey("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");
 
@@ -151,32 +137,18 @@ export const sendMail = async (req, res) => {
   let email = user.email;
   let urlinfo = proposal.pdfUrl;  
   let name = proposal.name;
-  // let subject = "Your PCR TEST result";
-  // let messageinfo = `To see your test result, go to here. http://localhost:8000/${urlinfo}`
   console.log(email, urlinfo, name);
   
-  var realUrl;
-  if (process.env.NODE_ENV !== 'production')
-    realUrl = `http://${process.env.LOCAL_URL}${urlinfo}`;
-  else
-    realUrl = `http://${process.env.PRODUCTION_URL}${urlinfo}`;
-  res.send(realUrl);
+  var realUrl=`http://localhost:8000/${urlinfo}`;
+  // if (process.env.NODE_ENV !== 'production')
+  //   realUrl = `http://localhost:8000/${urlinfo}`;
+  // else
+  //   realUrl = `http://${process.env.PRODUCTION_URL}${urlinfo}`;
+  // res.send(realUrl);
   try {
       await new SendpdfEmail(user, realUrl).sendUrl();
       console.log(">>>>>>>>>");
-      // const msg = {
-      //   to: email,
-      //   from: 'talentweb1@hotmail.com',
-      //   subject: 'Hi,' + name,
-      //   text: "name:" + name + "\nemail:" + email+ "\ntext:dfsdfasdfasfd "
-      // };
-      // sendgridMail.send(msg);
-     
-      // await sendEmail({
-      //     email: user.email,
-      //     subject: 'Your PCR test document',
-      //     message: 'Url send to email'
-      // });
+      
      
       res.status(200).json({
           status: 'success',

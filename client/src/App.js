@@ -6,6 +6,8 @@ import { Dashboard, Welcome, Auth } from './pages';
 import { TemplateContext } from './template/TemplateProvider';
 import { Grid } from '@mui/material';
 
+
+
 const App = () => {
   const ctx = useContext(TemplateContext);
 

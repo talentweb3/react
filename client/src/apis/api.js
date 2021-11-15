@@ -38,4 +38,3 @@ export const getApproved = (id) => Api.put(`/api/v1/apply/approved/${id}`);
 export const getDeclined = (id) => Api.put(`/api/v1/apply/declined/${id}`);
 export const viewRequest = (id) => Api.post('/api/v1/apply/viewRequest', id);
 export const sendMail = (id) => Api.post('/api/v1/apply/sendMail',id);
-export const downloadPDF = (id) => Api.post('/api/v1/apply/downloadPDF',id);

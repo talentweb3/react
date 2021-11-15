@@ -1,5 +1,5 @@
 import express from 'express';
-import { approved, addNewInfo, getProposalList, updateProposal, deleteProposal, getApproved, getDeclined, viewRequest, sendMail, downloadPDF } from '../controllers/applyController.js';
+import { approved, addNewInfo, getProposalList, updateProposal, deleteProposal, getApproved, getDeclined, viewRequest, sendMail } from '../controllers/applyController.js';
 
 
 const router = express.Router();
@@ -14,6 +14,5 @@ router.put('/declined/:id', getDeclined);
 router.delete('/deleteProposal/:id', deleteProposal)
 router.post('/viewRequest', viewRequest);
 router.post('/sendMail', sendMail);
-router.post('/downloadPDF', downloadPDF);
 
 export default router;

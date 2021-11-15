@@ -170,7 +170,7 @@ export const forgotPassword = catchAsync(async (req, res, next) => {
     if (process.env.NODE_ENV !== 'production')
         resetURL = `http://localhost:3000/user/resetPassword/${resetToken}`;
     else
-        resetURL = `https://alshameslabs.com/user/resetPassword/${resetToken}`;
+        resetURL = `${req.protocol}://${req.get('host')}/user/resetPassword/${resetToken}`;
     console.log("email:",user);
     try {
         await new Email(user, resetURL).sendPasswordReset();
@@ -235,16 +235,7 @@ export const getUserList = catchAsync(async (req, res, next) => {
 
 export const addNewUser = catchAsync(async (req, res, next) => {
     console.log(req.body);
-    const { name, email, status, role} = req.body;
-    const hashedPassword = await bcrypt.hash("password", 12);
-    const user = await User.create({
-        name,
-        email,
-        status,
-        password: hashedPassword,
-        role
-
-    });
+    const user = await User.create(req.body);
     
     if (user) {
         res.send('success');

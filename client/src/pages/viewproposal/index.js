@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import { useSelector, useDispatch } from 'react-redux';
 import Editable from '../../components/table';
-import { updateProposal, deleteProposal, getProposalList, viewRequest, download } from '../../actions/applyActions';
+import { updateProposal, deleteProposal, getProposalList, viewRequest } from '../../actions/applyActions';
 import { DELETE_USER } from '../../constants/userConstants';
 import varialbe from '../../config';
 import { TemplateContext } from '../../template/TemplateProvider';
@@ -63,7 +63,6 @@ const Proposal = () => {
               return( !(rowData.state==1)?(""):
                     <ButtonGroup variant="contained" aria-label="outlined primary button group">
                         <Button onClick={() => handleView(rowData._id)}>View and Download</Button>
-         .               {/* <Button onClick={() => handleaDownload(rowData._id)}>Download</Button> */}
                     </ButtonGroup>)
         }}
     ];

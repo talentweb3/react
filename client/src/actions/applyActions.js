@@ -3,7 +3,6 @@ import { GET_PROPOSALS_SUCCESS } from '../constants/applyConstant.js';
 import variable from '../config.js';
 
 
-
 export const addUserInfo = (userInfo) => async (dispatch) => {
     try {
         await api.addNewInfo(userInfo);
@@ -82,19 +81,6 @@ export const sendMail = (id) => async (dispatch) => {
     try {
         const {data} = await api.sendMail(id);
         console.log(data);
-    } catch (error) {
-        console.log("backend is not called", error);
-    }
-}
-
-export const download = (id) => async (dispatch) => {
-    try {
-        // const {data} = await api.downloadPDF(id);
-        // console.log(data);
-        
-        // await downloadww(data, './');
-        console.log("successs dwonload!")
-        // dispatch({ type: VIEW_DATA, payload: data });
     } catch (error) {
         console.log("backend is not called", error);
     }

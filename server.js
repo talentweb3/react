@@ -7,6 +7,9 @@ import path from 'path';
 
 const __dirname = path.resolve();
 
+
+
+
 import userRouter from './routes/userRoute.js';
 import applyRouter from './routes/applyRoute.js';
 
@@ -22,24 +25,29 @@ dotenv.config({ path: './config.env' });
 
 const app = express();
 
-
-
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.json({ limit: '30mb', extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-const DB = process.env.DATABASE;
+// if (process.env.NODE_ENV !== 'production' ) {
+//     const DB = process.env.DATABASE;
+// } else {
+//     const DB = "mongodb+srv://client:<password>@cluster0.vx8q1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+// }
+
+const DB = "mongodb+srv://client:pcrtest@cluster0.vx8q1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+
 
 mongoose
     .connect(DB, {
         useNewUrlParser: true,
-        useUnifiedTopology: true,
+        useUnifiedTopology: true
     })
     .then(() => console.log("database connection successfully!"))
     .catch((error) => console.log(error));
 
-const port = process.env.PORT || 80;
+const port = process.env.PORT || 8000;
 const server = app.listen(port, () => {
     console.log(`server is running on port ${port}`);
 });
