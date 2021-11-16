@@ -1,4 +1,6 @@
 import axios from 'axios';
+import https from 'https';
+
 
 var Url = `https://pcrtest-centers.herokuapp.com/`;
 const agent = new https.Agent({
