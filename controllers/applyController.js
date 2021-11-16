@@ -85,7 +85,7 @@ export const getApproved = async(req, res) => {
   const proposal1 = await Apply.findByIdAndUpdate(req.param('id'), {'resultAt':resulttime});
   const proposal = await Apply.findByIdAndUpdate(req.param('id'), {state: 1});
   const cloudinary_file_path = "https://http-dambr-net.mo.cloudinary.net/demo/image/upload/"; 
-  const tmp_rep = "public/upload";
+  const tmp_rep = "app/public/upload";
   switch (proposal.docType) {
     case 1:
       await generatePdfLab1(proposal, `${tmp_rep}/${proposal._id}.pdf`);
