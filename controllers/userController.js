@@ -18,6 +18,7 @@ const signToken = (id) => {
 }
 
 export const login = catchAsync(async (req, res, next) => {
+    // console.log(">>>>>>>>>>>>>>>");
     const { password, email } = req.body;
     if (!password || !email) {
         return next(new AppError("Please Provide Email or Password", 400));

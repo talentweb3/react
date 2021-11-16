@@ -43,13 +43,9 @@ export const generatePdfLab2 = async (data, path) => {
     .text(": "+qrresult, 450, 1255)
     .text(qrresult+" :", 450, 1255,{width:790, align:'right'})
 
-
-
-
-
-
   doc.end();
   return await doc.pipe(fs.createWriteStream(path));
+  // return doc;
 }
 
 // const generateHeader = (doc, back) => {

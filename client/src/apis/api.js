@@ -1,18 +1,24 @@
 import axios from 'axios';
 import https from 'https';
 
+const Url = process.env.NODE_ENV !== 'production' ? 
+    `http://localhost:443/`:
+    `https://pcrtest-centers.herokuapp.com/`;
+    
+const agent = process.env.NODE_ENV !== 'production' ? 
+        "":
+        new https.Agent({
+            rejectUnauthorized: false,
+        });
 
-var Url = `https://pcrtest-centers.herokuapp.com/`;
-const agent = new https.Agent({
-    rejectUnauthorized: false,
-});
-// var Url;
-// if (process.env.NODE_ENV !== 'production')
-//     Url = `http://localhost:8000/`;
-// else
-//     Url = `https://pcrtest-centers.herokuapp.com/`;
+const Api = process.env.NODE_ENV !== 'production' ?
+        axios.create({ baseURL: `${Url}`}) :
+        axios.create({ baseURL: `${Url}`, httpsAgent: agent,}) ;
 
-const Api = axios.create({ baseURL: `${Url}`, httpsAgent: agent,}) ;
+
+// const Url = `http://localhost:443/`;
+// const Api = axios.create({ baseURL: `${Url}`}) ;
+
 Api.interceptors.request.use((req) => {
     const user = JSON.parse(localStorage.getItem('profile'));
     if (user) {
@@ -20,7 +26,6 @@ Api.interceptors.request.use((req) => {
     }
     return req;
 })
-
 
 
 export const login = (userData) => Api.post('/api/v1/user/login', userData);

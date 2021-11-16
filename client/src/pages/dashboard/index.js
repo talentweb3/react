@@ -147,7 +147,7 @@ function DashboardContent() {
               Dashboard
             </Typography>
             {ctx.user?.userData.role=="1" ? (
-              <IconButton color="inherit" component={Link} to={'/main/proposal'}>
+              <IconButton sx={{marginRight:'10px'}} color="inherit" component={Link} to={'/main/proposal'}>
                 <Badge badgeContent={notifyNumber} color="secondary">
                   <NotificationsIcon />
                 </Badge>

@@ -8,6 +8,7 @@ import { generatePdfLab1 } from '../utils/generatePdfLab1.js';
 import { generatePdfLab2 } from '../utils/generatePdfLab2.js';
 import { generatePdfLab3 } from '../utils/generatePdfLab3.js';
 import { generatePdfLab4 } from '../utils/generatePdfLab4.js';
+import  cloudinary  from '../utils/cloudinary.js';
 
 export const addNewInfo = async (req, res) => {
     const check = await isExist();
@@ -83,24 +84,39 @@ export const getApproved = async(req, res) => {
   var resulttime = moment(time).format('YYYY-MM-DD HH-mm-ss');
   const proposal1 = await Apply.findByIdAndUpdate(req.param('id'), {'resultAt':resulttime});
   const proposal = await Apply.findByIdAndUpdate(req.param('id'), {state: 1});
+  const cloudinary_file_path = "https://http-dambr-net.mo.cloudinary.net/demo/image/upload/";
+  const tmp_rep = "app";
   switch (proposal.docType) {
     case 1:
-      await generatePdfLab1(proposal, `public/upload/${proposal._id}.pdf`);
+      await generatePdfLab1(proposal, `${tmp_rep}/${proposal._id}.pdf`);
       break;
     case 2:
-      await generatePdfLab2(proposal, `public/upload/${proposal._id}.pdf`);
+      await generatePdfLab2(proposal, `${tmp_rep}/${proposal._id}.pdf`);
       break;
     case 3:
-      await generatePdfLab3(proposal, `public/upload/${proposal._id}.pdf`);
+      await generatePdfLab3(proposal, `${tmp_rep}/${proposal._id}.pdf`);
       break;
     case 4:
-      await generatePdfLab4(proposal, `public/upload/${proposal._id}.pdf`);
+      await generatePdfLab4(proposal, `${tmp_rep}/${proposal._id}.pdf`);
       break;
     default:
       break;
   }
   
-  await Apply.findByIdAndUpdate(req.param('id'), {pdfUrl: `/upload/${req.param('id')}.pdf`});
+  console.log(">>>>>>>>>>>>>>>>,,,,,,,,,,,,,," );
+  
+  cloudinary.uploader.upload(`${tmp_rep}/${proposal._id}.pdf`,{tags: 'basic_sample',public_id:`${proposal._id}`}, function(err,proposal) {
+    console.log();
+    console.log("** Stream Upload");
+    if (err){ console.warn(err);}
+    console.log("* Same image, uploaded via stream");
+    console.log("* "+proposal._id);
+    
+  });
+
+
+  // console.log("approve:resultfie", resultfile);
+  await Apply.findByIdAndUpdate(req.param('id'), {pdfUrl: `/${cloudinary_file_path}/${req.param('id')}.pdf`});
   res.send('success');
 }
 
@@ -113,7 +129,7 @@ export const getDeclined = async (req, res) => {
 export const viewRequest = async (req, res) => {
   console.log("view",req.body);
   // const proposal = await Apply.findByIdAndUpdate(req.body, {state: 1});
-  // await generatePdfLab2(proposal, `public/upload/${proposal._id}.pdf`);
+  // await generatePdfLab2(proposal, `${cloudinary_file_path}${proposal._id}.pdf`);
   // await Apply.findByIdAndUpdate(req.param('_id'), {pdfUrl: `/upload/${req.param('_id')}.pdf`});
   const proposal1 = await Apply.findById(req.body);  
   const url = proposal1.pdfUrl;
