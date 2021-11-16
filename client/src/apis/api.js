@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-// var Url = `https://pcrtest-centers.herokuapp.com/`;
+var Url = `https://pcrtest-centers.herokuapp.com/`;
+// var Url;
 // if (process.env.NODE_ENV !== 'production')
 //     Url = `http://localhost:8000/`;
 // else
 //     Url = `https://pcrtest-centers.herokuapp.com/`;
 
-// const Api = axios.create({ baseURL: `${Url}`});
-const Api = axios.create();
+const Api = axios.create({ baseURL: `${Url}`});
 Api.interceptors.request.use((req) => {
     const user = JSON.parse(localStorage.getItem('profile'));
     if (user) {
