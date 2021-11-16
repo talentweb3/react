@@ -132,13 +132,15 @@ export const viewRequest = async (req, res) => {
   // await generatePdfLab2(proposal, `${cloudinary_file_path}${proposal._id}.pdf`);
   // await Apply.findByIdAndUpdate(req.param('_id'), {pdfUrl: `/upload/${req.param('_id')}.pdf`});
   const proposal1 = await Apply.findById(req.body);  
-  const url = proposal1.pdfUrl;
+  
+  // const url = proposal1.pdfUrl;
+  const url = `/${tmp_rep}/${proposal1._id}`;
   console.log(url);
   var veiwUrl;
   if (process.env.NODE_ENV !== 'production')
       veiwUrl = `http://localhost:8000${url}`;
   else
-      veiwUrl = `http://${process.env.PRODUCTION_URL}${url}`;
+      veiwUrl = `https://pcrtest-centers.herokuapp.com/${url}`;
   res.send(veiwUrl);
 }
 
