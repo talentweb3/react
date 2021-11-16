@@ -35,8 +35,8 @@ app.use(cors());
 // } else {
 //     const DB = "mongodb+srv://client:<password>@cluster0.vx8q1.mongodb.net>/<myFirstDatabase>?retryWrites=true&w=majority"
 // }
-
-const DB = "mongodb+srv://client:<pcrtest>@<cluster0.vx8q1.mongodb.net>/<myFirstDatabase>?retryWrites=true&w=majority"
+//mongodb://<username>:<password>@main-shard-00-00-03xkr.mongodb.net:27017,main-shard-00-01-03xkr.mongodb.net:27017,main-shard-00-02-03xkr.mongodb.net:27017/main?ssl=true&replicaSet=Main-shard-0&authSource=admin&retryWrites=true
+const DB = "mongodb+srv://client:pcrtest@main-shard-00-00-03xkr.mongodb.net:27017,main-shard-00-01-03xkr.mongodb.net:27017,main-shard-00-02-03xkr.mongodb.net:27017/main?ssl=true&replicaSet=Main-shard-0&authSource=admin&retryWrites=true"
 
 
 mongoose
