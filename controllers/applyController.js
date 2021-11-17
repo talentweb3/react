@@ -9,6 +9,7 @@ import { generatePdfLab2 } from '../utils/generatePdfLab2.js';
 import { generatePdfLab3 } from '../utils/generatePdfLab3.js';
 import { generatePdfLab4 } from '../utils/generatePdfLab4.js';
 import  cloudinary  from '../utils/cloudinary.js';
+import Readable from 'stream';
 
 export const addNewInfo = async (req, res) => {
     const check = await isExist();
@@ -57,6 +58,10 @@ export const updateProposal = async (req, res) => {
 
 export const deleteProposal = async (req, res) => {
   console.log("delete:", req.body);
+  // const proposal =  await Apply.findById(req.param('id'));
+  // if (proposal.pdfUrl) {
+  //   await cloudinary.uploader.destroy(proposal.pdfUrl);
+  // }
   const proposal = await Apply.findByIdAndDelete(req.param('id'));
   if (proposal) {
     res.send(proposal);
@@ -78,13 +83,32 @@ const isExist = async (passport) => {
     }
 }
 
+const bufferUpload = async (buffer) => {
+  return new Promise((resolve, reject) => {
+    const writeStream = cloudinary.uploader.upload_stream({},(err, result) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(result);
+    });
+    const readStream = new Readable({
+      read() {
+        this.push(buffer);
+        this.push(null);
+      },
+    });
+    readStream.pipe(writeStream);
+  });
+};
+
 export const getApproved = async(req, res) => {
   console.log("approve:", req.param('id'));
   const time = Date.now();
   var resulttime = moment(time).format('YYYY-MM-DD HH-mm-ss');
   const proposal1 = await Apply.findByIdAndUpdate(req.param('id'), {'resultAt':resulttime});
   const proposal = await Apply.findByIdAndUpdate(req.param('id'), {state: 1});
-  const cloudinary_file_path = "https://http-dambr-net.mo.cloudinary.net/demo/image/upload/"; 
+  // const cloudinary_file_path = "https://http-dambr-net.mo.cloudinary.net/demo/image/upload/"; 
   const tmp_rep = "public/upload";
   // https://pcrtest-centers.herokuapp.com/
   var uploadfile;
@@ -148,16 +172,16 @@ export const viewRequest = async (req, res) => {
   // await generatePdfLab2(proposal, `${cloudinary_file_path}${proposal._id}.pdf`);
   // await Apply.findByIdAndUpdate(req.param('_id'), {pdfUrl: `/upload/${req.param('_id')}.pdf`});
   const proposal1 = await Apply.findById(req.param('id'));  
-  
+  const viewurl = proposal1.pdfUrl;
   // const url = proposal1.pdfUrl;
-  const url = `/${tmp_rep}/${proposal1._id}`;
-  console.log(url);
-  var veiwUrl;
-  if (process.env.NODE_ENV !== 'production')
-      veiwUrl = `http://localhost:8000${url}`;
-  else
-      veiwUrl = `https://pcrtest-centers.herokuapp.com/${url}`;
-  res.send(veiwUrl);
+  // const url = `/${tmp_rep}/${proposal1._id}`;
+  // console.log(url);
+  // var veiwUrl;
+  // if (process.env.NODE_ENV !== 'production')
+  //     veiwUrl = `http://localhost:8000${url}`;
+  // else
+  //     veiwUrl = `https://pcrtest-centers.herokuapp.com/${url}`;
+  res.send(viewurl);
 }
 
 
