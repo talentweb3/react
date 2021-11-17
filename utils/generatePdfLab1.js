@@ -53,5 +53,6 @@ export const generatePdfLab1 = async (data, path) => {
     .text( "("+qrresult+")", 570, 790)
 
   doc.end();
-  return await doc.pipe(fs.createWriteStream(path));
+  //return await doc.pipe(fs.createWriteStream(path));
+  return doc;
 }

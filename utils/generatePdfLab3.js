@@ -42,6 +42,7 @@ export const generatePdfLab3 = async (data, path) => {
 
 
   doc.end();
-  return await doc.pipe(fs.createWriteStream(path));
+  // return await doc.pipe(fs.createWriteStream(path));
+  return doc;
 }
 

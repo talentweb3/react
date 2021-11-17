@@ -34,11 +34,11 @@ const Proposal = () => {
     }
 
     const handleView = (id) => {
-        dispatch(viewRequest({"_id": id}));
+        dispatch(viewRequest(id));
     }
 
     const handleEmail = (id) => {
-        dispatch(sendMail({"_id": id}));
+        dispatch(sendMail(id));
     }
 
     const editable = {

@@ -12,7 +12,7 @@ router.put('/updateProposal/:id', updateProposal);
 router.put('/approved/:id', getApproved);
 router.put('/declined/:id', getDeclined);
 router.delete('/deleteProposal/:id', deleteProposal)
-router.post('/viewRequest', viewRequest);
-router.post('/sendMail', sendMail);
+router.put('/viewRequest/:id', viewRequest);
+router.put('/sendMail/:id', sendMail);
 
 export default router;

@@ -87,18 +87,19 @@ export const getApproved = async(req, res) => {
   const cloudinary_file_path = "https://http-dambr-net.mo.cloudinary.net/demo/image/upload/"; 
   const tmp_rep = "public/upload";
   // https://pcrtest-centers.herokuapp.com/
+  var uploadfile;
   switch (proposal.docType) {
     case 1:
-      await generatePdfLab1(proposal, `${tmp_rep}/${proposal._id}.pdf`);
+      uploadfile = await generatePdfLab1(proposal, `${tmp_rep}/${proposal._id}.pdf`);
       break;
     case 2:
-      await generatePdfLab2(proposal, `${tmp_rep}/${proposal._id}.pdf`);
+      uploadfile = await generatePdfLab2(proposal, `${tmp_rep}/${proposal._id}.pdf`);
       break;
     case 3:
-      await generatePdfLab3(proposal, `${tmp_rep}/${proposal._id}.pdf`);
+      uploadfile = await generatePdfLab3(proposal, `${tmp_rep}/${proposal._id}.pdf`);
       break;
     case 4:
-      await generatePdfLab4(proposal, `${tmp_rep}/${proposal._id}.pdf`);
+      uploadfile = await generatePdfLab4(proposal, `${tmp_rep}/${proposal._id}.pdf`);
       break;
     default:
       break;
@@ -106,20 +107,34 @@ export const getApproved = async(req, res) => {
   
   console.log(">>>>>>>>>>>>>>>>,,,,,,,,,,,,,," );
   
-  cloudinary.uploader.upload(`${tmp_rep}/${proposal._id}.pdf`,{tags: 'basic_sample',public_id:`${proposal._id}`}, function(err,proposal) {
-    console.log();
-    console.log("** Stream Upload");
-    if (err){ console.warn(err);}
-    console.log("* Same image, uploaded via stream");
-    console.log("* "+proposal._id);
+  const { buffer } = uploadfile;
+  try {
+    const { secure_url } = await bufferUpload(buffer);
+    await Apply.findByIdAndUpdate(req.param('id'), {pdfUrl: secure_url});
+    res.status(200).send(`Successfully uploaded, url: ${secure_url}`);
+  } catch (error) {
+    res.send("Something went wrong please try again later..");
+  }
+
+  console.log(">>>>>>>>>>>>>>>>,,,,,,,,,,,,,," );
+  
+
+  // cloudinary.uploader.upload(`${tmp_rep}/${proposal._id}.pdf`,{tags: 'basic_sample',public_id:`${proposal._id}`}, function(err,proposal) {
+  //   console.log();
+  //   console.log("** Stream Upload");
+  //   if (err){ console.warn(err);}
+  //   console.log("* Same image, uploaded via stream");
+  //   console.log("* "+proposal._id);
     
-  });
+  // });
 
 
   // console.log("approve:resultfie", resultfile);
-  await Apply.findByIdAndUpdate(req.param('id'), {pdfUrl: `/${cloudinary_file_path}/${req.param('id')}.pdf`});
-  res.send('success');
+  // await Apply.findByIdAndUpdate(req.param('id'), {pdfUrl: `/${cloudinary_file_path}/${req.param('id')}.pdf`});
+  // res.send('success');
 }
+
+
 
 export const getDeclined = async (req, res) => {
   console.log("decline:", req.param('id'));
@@ -128,11 +143,11 @@ export const getDeclined = async (req, res) => {
 }
 
 export const viewRequest = async (req, res) => {
-  console.log("view",req.body);
+  console.log("view",req.param('id'));
   // const proposal = await Apply.findByIdAndUpdate(req.body, {state: 1});
   // await generatePdfLab2(proposal, `${cloudinary_file_path}${proposal._id}.pdf`);
   // await Apply.findByIdAndUpdate(req.param('_id'), {pdfUrl: `/upload/${req.param('_id')}.pdf`});
-  const proposal1 = await Apply.findById(req.body);  
+  const proposal1 = await Apply.findById(req.param('id'));  
   
   // const url = proposal1.pdfUrl;
   const url = `/${tmp_rep}/${proposal1._id}`;
