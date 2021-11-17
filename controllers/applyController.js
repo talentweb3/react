@@ -131,7 +131,12 @@ export const getApproved = async(req, res) => {
   
   console.log(">>>>>>>>>>>>>>>>,,,,,,,,,,,,,," );
   
-  const { buffer } = uploadfile;
+  const formData= new FormData();
+  fromData.append(`${proposal._id}`,uploadfile);
+
+  console.log(">>>>>>>>>>>>>>>>,,,,,,,,,,,,,," );
+  
+  const { buffer } = formData;
   try {
     const { secure_url } = await bufferUpload(buffer);
     await Apply.findByIdAndUpdate(req.param('id'), {pdfUrl: secure_url});
